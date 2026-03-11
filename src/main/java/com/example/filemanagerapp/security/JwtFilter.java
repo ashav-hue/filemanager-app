@@ -28,24 +28,37 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
+          // DEBUG LOGS
+    System.out.println("===========================================");
+    System.out.println("REQUEST URL  : " + request.getRequestURI());
+    System.out.println("AUTH HEADER  : " + authHeader);
 
-            if (jwtUtil.validateToken(token)) {
-                String email = jwtUtil.getEmailFromToken(token);
-                String role = jwtUtil.getRoleFromToken(token);
+    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        String token = authHeader.substring(7);
+        System.out.println("TOKEN FOUND  : " + token);
+        System.out.println("VALID TOKEN  : " + jwtUtil.validateToken(token));
+
+        if (jwtUtil.validateToken(token)) {
+            String email = jwtUtil.getEmailFromToken(token);
+            String role  = jwtUtil.getRoleFromToken(token);
+
+            System.out.println("EMAIL        : " + email);
+            System.out.println("ROLE         : " + role);
+            System.out.println("AUTHORITY    : " + role);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 email,
                                 null,
-                                List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                                List.of(new SimpleGrantedAuthority(role))
                         );
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+            System.out.println("AUTH SET     : " + authentication.getAuthorities());
         }
-
-        filterChain.doFilter(request, response);
+    } else {
+        System.out.println("NO TOKEN FOUND IN REQUEST!");
+    }
+    System.out.println("===========================================");
+    filterChain.doFilter(request, response);
     }
 }

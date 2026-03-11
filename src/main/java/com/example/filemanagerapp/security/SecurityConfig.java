@@ -34,9 +34,9 @@ public class SecurityConfig {
                 // Public endpoints
                 .requestMatchers("/api/auth/**").permitAll()
                 // Admin only
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                 // User only
-                .requestMatchers("/api/files/**").hasRole("USER")
+                .requestMatchers("/api/files/**").hasAuthority("USER")
                 // All others need authentication
                 .anyRequest().authenticated()
             )
