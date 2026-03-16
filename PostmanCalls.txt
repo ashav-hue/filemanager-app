@@ -1,0 +1,70 @@
+### Test 1 — Admin Login
+Method  : POST
+URL     : http://localhost:8080/api/auth/login
+Headers : Content-Type: application/json
+Body    :
+{
+    "email": "admin@gmail.com",
+    "password": "admin123"
+}
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9...",
+    "role": "ADMIN",
+    "fullName": "Admin",
+    "userId": 1
+}
+```
+
+---
+
+### Test 2 — Create User (use token from Test 1)
+```
+Method  : POST
+URL     : http://localhost:8080/api/admin/users
+Headers :
+  Content-Type: application/json
+  Authorization: Bearer <paste token here>
+Body    :
+{
+    "fullName": "John Doe",
+    "email": "john@gmail.com",
+    "password": "john123",
+    "role": "USER",
+    "active": true
+}
+```
+
+---
+
+### Test 3 — Get All Users
+```
+Method  : GET
+URL     : http://localhost:8080/api/admin/users
+Headers :
+  Authorization: Bearer <paste token here>
+```
+
+---
+
+### Test 4 — User Login
+```
+Method  : POST
+URL     : http://localhost:8080/api/auth/login
+Body    :
+{
+    "email": "john@gmail.com",
+    "password": "john123"
+}
+```
+
+---
+
+### Test 5 — Upload File (use USER token)
+```
+Method  : POST
+URL     : http://localhost:8080/api/files/upload
+Headers :
+  Authorization: Bearer <user token>
+Body    : form-data
+  file   : (select any file)
+  userId : 2

@@ -12,11 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class FileService {
 
@@ -34,9 +36,11 @@ public class FileService {
         fileEntity.setFileSize(file.getSize());
         fileEntity.setUploadedAt(LocalDateTime.now());
         fileEntity.setUser(user);
+        fileEntity.setFileData(file.getBytes());
+        fileEntity.setFilePath("C:\\Users\\asha.v_inapp\\Desktop");
 
         return convertToDTO(fileRepository.save(fileEntity));
-    }
+    }   
 
     // Get paginated files for user
     public Page<FileDTO> getUserFiles(Long userId, int page, int size) {

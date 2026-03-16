@@ -1,48 +1,37 @@
 package com.example.filemanagerapp.entity;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.Data;
 
 
-@Data
 @Entity
 @Table(name = "files")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class FileEntity {
 
-@Id 
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Column(nullable = false)
-private String fileName;
+    private String fileName;
+    private String fileType;
+    private Long fileSize;
+    private LocalDateTime uploadedAt;
 
-@Column(nullable = false)
-private String filePath;
+    @Column(columnDefinition = "bytea")  // ← bytea type
+    private byte[] fileData;
 
-private Long fileSize;  
+    private String filePath;
 
-@Column(nullable = false)
-private String fileType;
-
-@Lob
-@Column(nullable = false)
-private byte[] fileData;
-
-@Column(nullable = false)
-private LocalDateTime uploadedAt;
-
-@ManyToOne
-@JoinColumn(name = "user_id", nullable = false)
-private User user;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

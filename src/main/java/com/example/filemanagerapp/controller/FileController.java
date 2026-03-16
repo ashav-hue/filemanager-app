@@ -22,11 +22,19 @@ public class FileController {
 
     // Upload file
     @PostMapping("/upload")
-    public ResponseEntity<FileDTO> uploadFile(
+    public ResponseEntity<String> uploadFile(
             @RequestParam("file") MultipartFile file,
             @RequestParam("userId") Long userId) throws IOException {
-        return ResponseEntity.ok(fileService.uploadFile(file, userId));
-    }
+
+                 System.out.println("Upload called!");
+    System.out.println("UserId: " + userId);
+    System.out.println("File: " + file.getOriginalFilename());
+   
+        fileService.uploadFile(file, userId);
+    return ResponseEntity.ok()
+    .contentType(MediaType.TEXT_PLAIN)
+    .body("Uploaded successfully!");
+}
 
     // Get paginated files for user
     @GetMapping("/user/{userId}")
