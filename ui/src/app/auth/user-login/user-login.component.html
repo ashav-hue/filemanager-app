@@ -1,0 +1,68 @@
+<div class="min-vh-100 d-flex align-items-center
+            justify-content-center bg-light">
+  <div class="card shadow-lg" style="width: 400px;">
+
+    <!-- Header -->
+    <div class="card-header bg-secondary text-white text-center py-4">
+      <i class="bi bi-person-circle fs-1"></i>
+      <h4 class="mt-2 mb-0">User Portal</h4>
+      <small>File Manager Application</small>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body p-4">
+
+      <!-- Error -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        {{ errorMessage }}
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          <i class="bi bi-envelope me-1"></i>Email
+        </label>
+        <input type="email"
+               class="form-control"
+               placeholder="Enter your email"
+               [(ngModel)]="email">
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="form-label fw-bold">
+          <i class="bi bi-lock me-1"></i>Password
+        </label>
+        <input type="password"
+               class="form-control"
+               placeholder="Enter your password"
+               [(ngModel)]="password">
+      </div>
+
+      <!-- Login Button -->
+      <button class="btn btn-secondary w-100 py-2"
+              (click)="onLogin()"
+              [disabled]="loading">
+        <span *ngIf="loading"
+              class="spinner-border spinner-border-sm me-2">
+        </span>
+        <i *ngIf="!loading"
+           class="bi bi-box-arrow-in-right me-2"></i>
+        {{ loading ? 'Logging in...' : 'Login' }}
+      </button>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer text-center text-muted py-3">
+      <small>Are you an admin?
+        <a routerLink="/admin/login"
+           class="text-dark fw-bold">
+          Admin Login
+        </a>
+      </small>
+    </div>
+
+  </div>
+</div>

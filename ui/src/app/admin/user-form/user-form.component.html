@@ -1,0 +1,114 @@
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+
+      <!-- Header -->
+      <div class="card-header bg-dark text-white py-3">
+        <h5 class="mb-0">
+          <i class="bi bi-person-fill me-2"></i>
+          {{ isEditMode ? 'Edit User' : 'Add New User' }}
+        </h5>
+      </div>
+
+      <!-- Body -->
+      <div class="card-body p-4">
+
+        <!-- Success -->
+        <div *ngIf="successMessage" class="alert alert-success">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          {{ successMessage }}
+        </div>
+
+        <!-- Error -->
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Full Name -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">
+            <i class="bi bi-person me-1"></i>Full Name
+          </label>
+          <input type="text"
+                 class="form-control"
+                 placeholder="Enter full name"
+                 [(ngModel)]="user.fullName"
+                 required>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">
+            <i class="bi bi-envelope me-1"></i>Email
+          </label>
+          <input type="email"
+                 class="form-control"
+                 placeholder="Enter email"
+                 [(ngModel)]="user.email"
+                 required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">
+            <i class="bi bi-lock me-1"></i>
+            Password
+            <small *ngIf="isEditMode"
+                   class="text-muted fw-normal">
+              (leave blank to keep current)
+            </small>
+          </label>
+          <input type="password"
+                 class="form-control"
+                 placeholder="Enter password"
+                 [(ngModel)]="user.password">
+        </div>
+
+        <!-- Role -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">
+            <i class="bi bi-shield me-1"></i>Role
+          </label>
+          <select class="form-select"
+                  [(ngModel)]="user.role">
+            <option value="USER">USER</option>
+            <option value="ADMIN">ADMIN</option>
+          </select>
+        </div>
+
+        <!-- Status -->
+        <div class="mb-4">
+          <label class="form-label fw-bold">
+            <i class="bi bi-toggle-on me-1"></i>Status
+          </label>
+          <select class="form-select"
+                  [(ngModel)]="user.active">
+            <option [ngValue]="true">Active</option>
+            <option [ngValue]="false">Inactive</option>
+          </select>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex gap-2">
+          <button class="btn btn-dark flex-fill"
+                  (click)="onSubmit()"
+                  [disabled]="loading">
+            <span *ngIf="loading"
+                  class="spinner-border spinner-border-sm me-2">
+            </span>
+            <i *ngIf="!loading" class="bi bi-save me-2"></i>
+            {{ loading ? 'Saving...' :
+               isEditMode ? 'Update User' : 'Create User' }}
+          </button>
+          <button class="btn btn-outline-secondary flex-fill"
+                  (click)="onCancel()">
+            <i class="bi bi-x-circle me-2"></i>
+            Cancel
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
